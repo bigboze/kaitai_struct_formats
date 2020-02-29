@@ -383,7 +383,8 @@ types:
                 'sh_type::dynamic': dynamic_section
                 'sh_type::strtab': strings_struct
                 'sh_type::dynsym': dynsym_section
-                'sh_type::dynstr': strings_struct
+                'sh_type::nobits': nobits_section
+                _: unknown_section
           name:
             io: _root.header.strings._io
             pos: ofs_name
@@ -465,6 +466,17 @@ types:
             type: u8
           - id: size
             type: u8
+      nobits_section:
+        doc: |
+          Identifies a section that occupies no space in the file but
+          otherwise resembles SHT_PROGBITS. Although this section contain
+          no bytes, the sh_offset member contains the conceptual file offset.
+      unknown_section:
+        seq:
+          - id: bytes
+            type: u1
+            repeat: eos
+
     instances:
       program_headers:
         pos: program_header_offset
